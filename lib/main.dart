@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzler/question-brain.dart';
 
 void main() => runApp(Quizzler());
 
@@ -25,8 +26,24 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Widget> scoreKeeper = [];
+
+  // List<String> questions = [
+  //   'You can lead a cow down stairs but not up stairs.',
+  //   'Approximately one quarter of human bones are in the feet.',
+  //   'A slug\'s blood is green.',
+  //   'Answer of third Question'
+  // ];
+
+  // List<bool> answers = [false, true, true, null];
+  // int questionNumber = 0;
+
+  // Question q1 = Question(
+  //     q: 'You can lead a cow down stairs but not up stairs.', a: false);
+
   @override
   Widget build(BuildContext context) {
+    QuestionBrain questionBrain = QuestionBrain();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,7 +54,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questionBrain.getQuestion(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -62,6 +79,17 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
+
+                bool correctAnswer = questionBrain.getAnswer();
+
+                if (correctAnswer == true) {
+                  print('You got the answer');
+                } else {
+                  print('you didn\'t get the answer');
+                }
+                setState(() {
+                  questionBrain.nextQuestion();
+                });
               },
             ),
           ),
@@ -80,11 +108,31 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked false.
+                bool correctAnswer = questionBrain.getAnswer();
+
+                if (correctAnswer == false) {
+                  print('You got the answer');
+                } else {
+                  print('you didn\'t get the answer');
+                }
+                setState(() {
+                  questionBrain.nextQuestion();
+                });
               },
             ),
           ),
         ),
         //TODO: Add a Row here as your score keeper
+        Row(children: [
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          )
+        ])
       ],
     );
   }
