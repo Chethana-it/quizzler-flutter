@@ -1,7 +1,7 @@
 import 'question.dart';
-
+int _questionNumber = 0;
 class QuestionBrain {
-  int _questionNumber = 0;
+  
   List<Question> _questionBank = [
     Question(q: 'Some cats are actually allergic to humans', a: true),
     Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
@@ -33,8 +33,11 @@ class QuestionBrain {
   ];
 
   void nextQuestion() {
-    if (_questionNumber < _questionBank.length) {
+    if (_questionNumber < _questionBank.length - 1 ) {
       _questionNumber++;
+      print(_questionNumber);
+      print(_questionBank[_questionNumber].questionText);
+      print(_questionBank.length);
     }
   }
 
